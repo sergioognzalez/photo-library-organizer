@@ -1,0 +1,4 @@
+# The project dependencies are declared in pyproject.toml.
+# Install the application with: python -m pip install .
+# Install the optional executable builder with: python -m pip install ".[build]"
+.

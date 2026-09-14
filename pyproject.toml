@@ -1,0 +1,20 @@
+[project]
+name = "app-foto"
+version = "0.1.0"
+description = "Aplicacion local para organizar fotos y videos y separar duplicados exactos."
+requires-python = ">=3.11"
+dependencies = [
+  "PySide6>=6.7",
+]
+
+[project.optional-dependencies]
+build = [
+  "pyinstaller>=6.0",
+]
+
+[project.scripts]
+app-foto = "photo_organizer.ui.main_window:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
