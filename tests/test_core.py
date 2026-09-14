@@ -326,7 +326,15 @@ class AppFotoCoreTests(unittest.TestCase):
         self.assertEqual(recalculated.destination, second_destination.resolve(strict=False))
         self.assertTrue(recalculated.database_path.exists())
         self.assertEqual(recalculated.summary["grupos_duplicados"], 1)
-        self.assertTrue(all(str(file.planned_destination).startswith(str(second_destination)) for file in recalculated.files))
+        resolved_destination = second_destination.resolve(strict=False)
+        for media_file in recalculated.files:
+            with self.subTest(relative_path=media_file.relative_path):
+                self.assertIsNotNone(media_file.planned_destination)
+                planned_destination = media_file.planned_destination.resolve(strict=False)
+                self.assertTrue(
+                    planned_destination.is_relative_to(resolved_destination),
+                    f"{planned_destination} no esta dentro de {resolved_destination}",
+                )
         self.assertEqual({file.relative_path: file.hash for file in recalculated.files}, hashes)
 
     def test_recalculate_previous_analysis_rejects_changed_source(self) -> None:
